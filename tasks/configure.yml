@@ -14,9 +14,9 @@
     state: present
     mode: 0644
   become: true
-  notify:
-    - Generate initramfs
-    - Reload kvm_intel module
+  # notify:
+  #   - Generate initramfs
+  #   - Reload kvm_intel module
 
 - name: Add OVMF paths to libvirt QEMU configuration
   blockinfile:
@@ -27,4 +27,4 @@
           "/usr/share/ovmf/x64/OVMF_CODE.fd:/usr/share/ovmf/x64/OVMF_VARS.fd"
       ]
   become: true
-  notify: Restart libvirtd service
+  # notify: Restart libvirtd service
