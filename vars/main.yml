@@ -1,0 +1,9 @@
+---
+# vars file for ansible-role-virt
+virt_cli:
+  - docker
+  - vagrant
+
+virt_gui:
+  - virtualbox
+  - virt-manager

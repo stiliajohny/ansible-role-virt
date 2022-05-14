@@ -1,0 +1,111 @@
+---
+- name: Create user group vboxusers
+  group:
+    name: vboxusers
+    state: present
+  become: true
+
+- name: Create group libvirt
+  group:
+    name: libvirt
+    state: present
+  become: true
+
+- name: Create user group
+  group:
+    name: "docker"
+    state: present
+  become: true
+
+- name: Adding {{ users[0].name }} to docker group
+  user:
+    name: "{{ users[0].name }}"
+    append: yes
+    groups: ["docker"]
+  become: true
+
+- name: Adding {{ users[0].name }} to vboxusers group
+  user:
+    name: "{{ users[0].name }}"
+    append: yes
+    groups: ["vboxusers"]
+  become: true
+
+- name: Adding {{ users[0].name }} to libvirt group
+  user:
+    name: "{{ users[0].name }}"
+    append: yes
+    groups: ["libvirt"]
+  become: true
+
+- name: Reload group changes
+  shell: "newgrp {{ item }}"
+  with_items:
+    - docker
+    - libvirt
+    - vboxusers
+
+- name: Install docker
+  community.general.pacman:
+    name: docker
+  become: true
+
+- name: Install virt cli packages
+  community.general.pacman:
+    name: "{{ virt_cli }}"
+    state: present
+  become: true
+
+- name: Install virt gui packages
+  community.general.pacman:
+    name: "{{ virt_gui }}"
+    state: present
+  become: true
+
+- name: Install kubectl
+  community.general.pacman:
+    name: kubectl
+    state: present
+  become: true
+
+- name: Install helm
+  community.general.pacman:
+    name: helm
+    state: present
+  become: true
+
+- name: Install minikube
+  community.general.pacman:
+    name: minikube
+    state: present
+  become: true
+
+- name: Install k9s
+  community.general.pacman:
+    name: k9s
+    state: present
+  become: true
+
+- name: Install lazydocker
+  aur:
+    name: "lazydocker"
+    use: yay
+  become: true
+  become_user: aur_builder
+
+- name: Install stern
+  community.general.pacman:
+    name: stern
+    state: present
+  become: true
+
+- name: Enable and start Docker service
+  systemd:
+    name: docker.service
+    enabled: True
+    state: started
+  become: true
+
+- include: configure.yml
+- include: docker_images_pull.yml
+# #- include: vagrant_box_pull.yml

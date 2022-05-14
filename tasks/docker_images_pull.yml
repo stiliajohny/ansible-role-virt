@@ -1,0 +1,15 @@
+---
+- name: Install docker python module
+  pip:
+    name: docker
+    executable: pip3
+  become: true
+
+- name: Pull docker images
+  docker_image:
+    name: "{{ docker_image_pull_loop }}"
+    source: pull
+  with_items: "{{ docker_images }}"
+  loop_control:
+    loop_var: docker_image_pull_loop
+  become: true

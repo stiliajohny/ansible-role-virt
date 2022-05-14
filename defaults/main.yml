@@ -1,0 +1,35 @@
+---
+# defaults file for ansible-role-virt
+
+docker_images:
+  - alpine
+  - amazonlinux
+  - ansible/awx
+  - aquasec/kube-hunter
+  - aquasec/trivy
+  - bash
+  - bash:5.0.18
+  - busybox
+  - centos
+  - centos:centos7
+  - centos:centos8
+  - chentex/random-logger:latest
+  - concourse/concourse
+  - diverdane/secretless-k8s-demo
+  - elasticsearch:7.9.1
+  - fedora:29
+  - fedora:30
+  - fedora:31
+  - jekyll/jekyll
+  - kalilinux/kali
+  - kalilinux/kali-rolling
+  - kibana:7.9.1
+  - mariadb
+  - mysql
+  - postgres
+  - python
+  - python:3.9.0rc1-buster
+  - rmountjoy/dashmachine
+  - ubuntu:18.04
+# users:
+#   - name: foo
